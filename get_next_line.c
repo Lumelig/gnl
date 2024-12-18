@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpflegha <jpflegha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 15:59:37 by jpflegha          #+#    #+#             */
+/*   Updated: 2024/12/18 14:01:05 by jpflegha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 void	free_and_null(char **ptr)
@@ -24,7 +36,7 @@ char	*ft_strjoin(char *s1, char *s2)
 			return (NULL);
 		s1[0] = '\0';
 	}
-	str = malloc(strlen(s1) + strlen(s2) + 1);
+	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!str)
 	{
 		free_and_null(&s1);
@@ -60,11 +72,11 @@ char	*read_file(int fd, char *remainder)
 			return (NULL);
 		}
 		if (bytes_read == 0)
-			break;
+			break ;
 		buffer[bytes_read] = '\0';
 		remainder = ft_strjoin(remainder, buffer);
-		if (!remainder || strchr(remainder, '\n'))
-			break;
+		if (!remainder || ft_strchr(remainder, '\n'))
+			break ;
 	}
 	free_and_null(&buffer);
 	return (remainder);
@@ -80,7 +92,9 @@ char	*extract_line(char *remainder)
 	i = 0;
 	while (remainder[i] && remainder[i] != '\n')
 		i++;
-	line = malloc(i + 2);
+	if (remainder[i])
+		i++;
+	line = malloc(i + 1);
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -112,13 +126,13 @@ char	*update_remainder(char *remainder)
 		free_and_null(&remainder);
 		return (NULL);
 	}
-	new_remainder = malloc(strlen(remainder) - i + 1);
+	new_remainder = malloc(ft_strlen(remainder) - i + 1);
 	if (!new_remainder)
 	{
 		free_and_null(&remainder);
 		return (NULL);
 	}
-	i++; 
+	i++;
 	j = 0;
 	while (remainder[i])
 		new_remainder[j++] = remainder[i++];
@@ -129,10 +143,10 @@ char	*update_remainder(char *remainder)
 
 char	*get_next_line(int fd)
 {
-	static char	*remainder;
-	char		*line;
+	static char *remainder;
+	char *line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, remainder, 0) < 0)
 	{
 		free_and_null(&remainder);
 		return (NULL);
@@ -144,3 +158,4 @@ char	*get_next_line(int fd)
 	remainder = update_remainder(remainder);
 	return (line);
 }
+
