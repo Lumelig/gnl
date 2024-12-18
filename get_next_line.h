@@ -6,17 +6,17 @@
 /*   By: jpflegha <jpflegha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 17:29:43 by jpflegha          #+#    #+#             */
-/*   Updated: 2024/12/06 16:04:57 by jpflegha         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:16:21 by jpflegha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <unistd.h> // for read
+# include <fcntl.h>  // for open txt file
+# include <stdio.h>  // for printf and End Of File
 # include <stdlib.h> // for malloc
-# include <stdio.h> // for printf and End Of File
-# include <fcntl.h> // for open txt file
+# include <unistd.h> // for read
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
@@ -27,9 +27,9 @@ void	free_and_null(char **ptr);
 
 char	*read_file(int fd, char *remainder);
 
-char	*extract_line(char *remainder);
+char	*extract_line(char **remainder);
 
-char	*update_remainder(char *remainder);
+char	*update_remainder(char **remainder);
 
 char	*get_next_line(int fd);
 

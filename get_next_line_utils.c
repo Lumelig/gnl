@@ -6,7 +6,7 @@
 /*   By: jpflegha <jpflegha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 15:59:30 by jpflegha          #+#    #+#             */
-/*   Updated: 2024/12/06 16:05:34 by jpflegha         ###   ########.fr       */
+/*   Updated: 2024/12/18 17:20:03 by jpflegha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*ft_strchr(const char *s, int c)
 		return (cs);
 	return (NULL);
 }
+
 size_t	ft_strlen(const char *str)
 {
 	int	i;
@@ -40,4 +41,13 @@ size_t	ft_strlen(const char *str)
 		i++;
 	}
 	return (i);
+}
+
+void	free_and_null(char **ptr)
+{
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }
